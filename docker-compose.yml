@@ -1,0 +1,29 @@
+version: '3'
+services:
+   stoom:
+      build:
+        context: ./
+        dockerfile: ./Dockerfile
+      image: stoom
+      container_name: stoom-aplication
+      ports:
+        - '8080:8080'
+      links:
+        - mongo-stoom
+      depends_on:
+        - mongo-stoom
+      networks:
+        - shared-net    
+   mongo-stoom:
+      image: mongo
+      container_name: mongo_stoom
+      ports:
+        - "27017:27017"
+      volumes:
+        - /home/Desenvolvimento/Docker/Volumes/MongoDB:/data/db
+      networks:
+        - shared-net          
+
+networks: 
+    shared-net:
+      driver: bridge    
